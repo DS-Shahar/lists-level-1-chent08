@@ -4,27 +4,26 @@ public class Main {
 	
 	public static Node<Integer> returnList(int[] arr){
 			
-			if (arr.length == 0) 
-				return null;
+		if (arr.length == 0) 
+			return null;
 			
-			Node<Integer> head = new Node(arr[0]);
-			Node<Integer> current = head; 
-			for(int i = 1 ; i < arr.length ; i++) {
-				Node<Integer> nextNode = new Node(arr[i]);
-				current.setNext(nextNode);
-				current = nextNode;
-			}
-			
-			return head;
+		Node<Integer> head = new Node(arr[0]);
+		Node<Integer> current = head; 
+		for(int i = 1 ; i < arr.length ; i++) {
+			Node<Integer> nextNode = new Node(arr[i]);
+			current.setNext(nextNode);
+			current = nextNode;
+		}
+		return head;
 	}
 	
 	
 	public static void printList(Node<Integer> head) {
-        Node<Integer> current = head;
-        while (current != null) {
-            System.out.println(current.getValue());
-            current = current.getNext();
-        }
+        	Node<Integer> current = head;
+        	while (current != null) {
+            	System.out.println(current.getValue());
+            	current = current.getNext();
+        	}
 	}
 	
 	public static void recursivePrintList(Node<Integer> head) {
@@ -44,7 +43,7 @@ public class Main {
 	public static Node<Integer> inputList(){
 		Node<Integer> list = new Node<Integer> (null); //חוליית דמה
 		Node<Integer> p = list;
-        Scanner reader = new Scanner(System.in); // Initialize the Scanner
+        	Scanner reader = new Scanner(System.in); // Initialize the Scanner
 		System.out.println("Enter number or -1 to end:");
 		int num = reader.nextInt();
 		Node<Integer> x;
@@ -181,29 +180,29 @@ public class Main {
 		System.out.println(" ");
 		//creates a new list
 		Node<Integer> head = new Node<>(1);
-        head.setNext(new Node<>(2));
-        head.getNext().setNext(new Node<>(3));
-        head.getNext().getNext().setNext(new Node<>(4));
-        head.getNext().getNext().getNext().setNext(new Node<>(5));
-        printList(head);
+        	head.setNext(new Node<>(2));
+        	head.getNext().setNext(new Node<>(3));
+       	 	head.getNext().getNext().setNext(new Node<>(4));
+        	head.getNext().getNext().getNext().setNext(new Node<>(5));
+        	printList(head);
         
-        //ex2 -recursive
+        	//ex2 -recursive
 		System.out.println(" ");
-        recursivePrintList(head);
+        	recursivePrintList(head);
         
-        //ex2 - minus recursion
+        	//ex2 - minus recursion
 		System.out.println(" recursive 2 ");
-        recursivePrintListEnd(head);
+       	 	recursivePrintListEnd(head);
         
-        //ex3
-        //System.out.println(inputList());
+        	//ex3
+        	//System.out.println(inputList());
         
-        //ex4
+        	//ex4
 		System.out.print("exe 4: ");
-        evenValues(head);
-        System.out.println(" ");
+        	evenValues(head);
+        	System.out.println(" ");
         
-        //ex5
+        	//ex5
 		System.out.print("exe 5: ");
 		System.out.println(numInList(head,4));
          
@@ -215,13 +214,13 @@ public class Main {
 		//ex6
 		System.out.print("exe 6: ");
 		System.out.print(removeFirst(head,3));
-        System.out.println(" ");
+        	System.out.println(" ");
 
         
 		// ex7 
 		System.out.print("exe 7: ");
 		System.out.print(removeIndexNode(head,4));
-        System.out.println(" ");
+        	System.out.println(" ");
 
 		// ex8 
 		System.out.print("exe 8: ");
@@ -234,10 +233,10 @@ public class Main {
 		
 		
 		Node<Integer> nodeA = new Node<>(1);
-	    Node<Integer> nodeB = new Node<>(2, nodeA);
-	    Node<Integer> nodeC = new Node<>(3, nodeB);
-	    Node<Integer> nodeD = new Node<>(4, nodeC);
-	    Node<Integer> nodeE = new Node<>(5, nodeD);  // L2
+	    	Node<Integer> nodeB = new Node<>(2, nodeA);
+	    	Node<Integer> nodeC = new Node<>(3, nodeB);
+	    	Node<Integer> nodeD = new Node<>(4, nodeC);
+	    	Node<Integer> nodeE = new Node<>(5, nodeD);  // L2
 	    
 		System.out.print(allValuesInTwoListsTailRec(node1,nodeE));
 				
