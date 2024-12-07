@@ -1,169 +1,249 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+public class Main {
 
-public class RecursiveListTasks {
-
-    // 1. מקבלת מערך, בונה ומחזירה רשימה עם הערכים שלו
-    public static List<Integer> arrayToList(int[] array) {
-        return arrayToListHelper(array, 0);
-    }
-
-    private static List<Integer> arrayToListHelper(int[] array, int index) {
-        if (index == array.length) { // בסיס: הגעה לסוף המערך
-            return new ArrayList<>();
+	
+	public static Node<Integer> returnList(int[] arr){
+			
+			if (arr.length == 0) 
+				return null;
+			
+			Node<Integer> head = new Node(arr[0]);
+			Node<Integer> current = head; 
+			for(int i = 1 ; i < arr.length ; i++) {
+				Node<Integer> nextNode = new Node(arr[i]);
+				current.setNext(nextNode);
+				current = nextNode;
+			}
+			
+			return head;
+	}
+	
+	
+	public static void printList(Node<Integer> head) {
+        Node<Integer> current = head;
+        while (current != null) {
+            System.out.println(current.getValue());
+            current = current.getNext();
         }
-        List<Integer> list = arrayToListHelper(array, index + 1);
-        list.add(0, array[index]); // מוסיפים בתחילת הרשימה
-        return list;
-    }
+	}
+	
+	public static void recursivePrintList(Node<Integer> head) {
+		if(head != null) {
+			System.out.println(head.getValue());
+			recursivePrintList(head.getNext());
+		}
+	}
+	
+	public static void recursivePrintListEnd(Node<Integer> head) {
+	    if (head != null) {
+	        recursivePrintListEnd(head.getNext());
+	        System.out.println(head.getValue());
+	    }
+	}
+	
+	public static Node<Integer> inputList(){
+		Node<Integer> list = new Node<Integer> (null); //חוליית דמה
+		Node<Integer> p = list;
+        Scanner reader = new Scanner(System.in); // Initialize the Scanner
+		System.out.println("Enter number or -1 to end:");
+		int num = reader.nextInt();
+		Node<Integer> x;
+		while(num != -1) {
+			x = new Node<Integer>(num);
+			p.setNext(x);
+			p = x;
+			System.out.println("Enter number or -1 to end:");
+			num = reader.nextInt();
+		}
+		return list.getNext();
+	}
+	
+	
+	public static void evenValues(Node<Integer> head) {
+		Node<Integer> current = head;
+		while(current != null) {
+			if(current.getValue() % 2 == 0 ) {
+				System.out.print(current.getValue() + ",");	
+			}
+			current = current.getNext();
+		}	
+	}
+	
+	
+	public static boolean numInList(Node<Integer> head, int target) { 
+		Node<Integer> current = head;
+		while(current != null) {
+			if(current.getValue() == target) {
+				return true;
+			}
+			current = current.getNext();
+		}
+		return false;
+	}
+	
+	
+	public static boolean numInListTailRecursion(Node<Integer> head, int target) {
+	    if(head == null) {
+	    	return false;
+	    }
+	    if(head.getValue() == target) {
+	    	return true;
+	    }
+	    return numInListTailRecursion(head.getNext() , target);
+	}
+	
+	public static Node<Integer> removeFirst( Node<Integer> head , int target){
+		if (head == null) {
+	        return null;
+	    }
+		
+		if (head.getValue() == target) {
+	        return head.getNext();  // מחזירים את הצומת הבאה אחרי הראש
+	    }
 
-    // 2. מדפיסה רשימה נתונה בשורות נפרדות
-    public static void printList(List<Integer> list) {
-        if (list.isEmpty()) {
-            return;
-        }
-        System.out.println(list.get(0));
-        printList(list.subList(1, list.size())); // רקורסיה עם הרשימה ללא האיבר הראשון
-    }
+		Node<Integer> current = head;
+		while(current != null) {
+			if(current.getNext().getValue() == target) {
+				current.setNext(current.getNext().getNext()); // דילוג על הצומת עם המספר המבוקש
+				return head;
+			}
+			current = current.getNext();
+		}
+		
+		return head;
+	}
 
-    // 3. מדפיסה מהסוף להתחלה
-    public static void printListReverse(List<Integer> list) {
-        if (list.isEmpty()) {
-            return;
-        }
-        printListReverse(list.subList(1, list.size())); // קודם מדפיסים את שאר הרשימה
-        System.out.println(list.get(0));
-    }
+	public static Node<Integer> removeIndexNode(Node<Integer> head , int index){
+		if (head == null) {
+	        return null;
+	    }
+		
+		if(index == 0) {
+			return head.getNext();
+		}
+		
+		Node<Integer> current = head;
+	
+		for(int i = 0; i< index-1 ; i++) {
+			if(current == null || current.getNext() == null) {
+				return head;
+			}
+			current = current.getNext();
+		}
+		
+		if (current.getNext() != null) {
+			current.setNext(current.getNext().getNext());
+		}
+		
+		return head;
+	}
 
-    // 4. קולטת מהמשתמש מספרים חיוביים ובונה רשימה עד לקליטת 1-
-    public static List<Integer> readPositiveNumbers() {
-        Scanner scanner = new Scanner(System.in);
-        return readPositiveNumbersHelper(scanner);
-    }
+	public static boolean allValuesInTwoListsTailRec(Node<Integer> L1, Node<Integer> L2) {
+		
+		if(L1 == null) {
+			return true;
+		}
+		
+		if(numInList(L2,L1.getValue()) == false) {
+			return false;
+		}
+		
+		return allValuesInTwoListsTailRec(L1.getNext(), L2);
+		
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+		//ex1
+		int[] array = {2,5,7};
+		System.out.println(returnList(array)); 
+		
+		
+		/*
+		Node<Integer> node1 = new Node<>(7);
+		Node<Integer> node2 = new Node<>(3);
+		Node<Integer> node3 = new Node<>(5);
+		Node<Integer> node4 = new Node<>(12);
+		
+		
+		node1.setNext(node2);
+		node1.getNext();
+		node2.setNext(node3);
+		node3.setNext(node4);
+		
+		System.out.println(node1);
+		*/
+		
+		//ex2
+		System.out.println(" ");
+		//creates a new list
+		Node<Integer> head = new Node<>(1);
+        head.setNext(new Node<>(2));
+        head.getNext().setNext(new Node<>(3));
+        head.getNext().getNext().setNext(new Node<>(4));
+        head.getNext().getNext().getNext().setNext(new Node<>(5));
+        printList(head);
+        
+        //ex2 -recursive
+		System.out.println(" ");
+        recursivePrintList(head);
+        
+        //ex2 - minus recursion
+		System.out.println(" recursive 2 ");
+        recursivePrintListEnd(head);
+        
+        //ex3
+        //System.out.println(inputList());
+        
+        //ex4
+		System.out.print("exe 4: ");
+        evenValues(head);
+        System.out.println(" ");
+        
+        //ex5
+		System.out.print("exe 5: ");
+		System.out.println(numInList(head,4));
+         
+       
+		System.out.print("exe 5 - tail recursion: ");
+		System.out.println(numInListTailRecursion(head,4));
+        
+		
+		//ex6
+		System.out.print("exe 6: ");
+		System.out.print(removeFirst(head,3));
+        System.out.println(" ");
 
-    private static List<Integer> readPositiveNumbersHelper(Scanner scanner) {
-        int num = scanner.nextInt();
-        if (num == -1) { // בסיס: משתמש קלט 1-
-            return new ArrayList<>();
-        }
-        List<Integer> list = readPositiveNumbersHelper(scanner);
-        list.add(0, num); // מוסיפים בתחילת הרשימה
-        return list;
-    }
+        
+		// ex7 
+		System.out.print("exe 7: ");
+		System.out.print(removeIndexNode(head,4));
+        System.out.println(" ");
 
-    // 5. מדפיסה את המספרים הזוגיים בלבד ברשימה נתונה
-    public static void printEvenNumbers(List<Integer> list) {
-        if (list.isEmpty()) {
-            return;
-        }
-        if (list.get(0) % 2 == 0) {
-            System.out.println(list.get(0));
-        }
-        printEvenNumbers(list.subList(1, list.size())); // ממשיכים עם הרשימה ללא האיבר הראשון
-    }
+		// ex8 
+		System.out.print("exe 8: ");
+		
+		Node<Integer> node5 = new Node<>(5);
+		Node<Integer> node4 = new Node<>(4, node5);
+		Node<Integer> node3 = new Node<>(3, node4);
+		Node<Integer> node2 = new Node<>(2, node3);
+		Node<Integer> node1 = new Node<>(1, node2);  // L1
+		
+		
+		Node<Integer> nodeA = new Node<>(1);
+	    Node<Integer> nodeB = new Node<>(2, nodeA);
+	    Node<Integer> nodeC = new Node<>(3, nodeB);
+	    Node<Integer> nodeD = new Node<>(4, nodeC);
+	    Node<Integer> nodeE = new Node<>(5, nodeD);  // L2
+	    
+		System.out.print(allValuesInTwoListsTailRec(node1,nodeE));
+				
+		
 
-    // 6. מחזירה האם מספר נתון מופיע ברשימה נתונה
-    public static boolean containsNumber(List<Integer> list, int number) {
-        if (list.isEmpty()) {
-            return false;
-        }
-        if (list.get(0) == number) {
-            return true;
-        }
-        return containsNumber(list.subList(1, list.size()), number);
-    }
+        
+	}
 
-    // 7. מחיקה של חוליה עם ערך מסוים (ברשימה)
-    public static List<Integer> deleteFirstOccurrence(List<Integer> list, int number) {
-        if (list.isEmpty()) {
-            return new ArrayList<>();
-        }
-        if (list.get(0) == number) {
-            return list.subList(1, list.size()); // מדלגים על האיבר הראשון
-        }
-        List<Integer> newList = deleteFirstOccurrence(list.subList(1, list.size()), number);
-        newList.add(0, list.get(0));
-        return newList;
-    }
-
-    // 8. מחיקה של חוליה לפי אינדקס נתון
-    public static List<Integer> deleteAtIndex(List<Integer> list, int index) {
-        if (list.isEmpty() || index < 0) {
-            return list;
-        }
-        if (index == 0) {
-            return list.subList(1, list.size());
-        }
-        List<Integer> newList = deleteAtIndex(list.subList(1, list.size()), index - 1);
-        newList.add(0, list.get(0));
-        return newList;
-    }
-
-    // 9. מחזירה האם כל ערכי L1 מופיעים ב-L2
-    public static boolean allValuesInList(List<Integer> L1, List<Integer> L2) {
-        if (L1.isEmpty()) {
-            return true;
-        }
-        if (!L2.contains(L1.get(0))) {
-            return false;
-        }
-        return allValuesInList(L1.subList(1, L1.size()), L2);
-    }
-
-    // 10. הדפסת ערכי L1 שמופיעים ב-L2
-    public static void printCommonValues(List<Integer> L1, List<Integer> L2) {
-        if (L1.isEmpty()) {
-            return;
-        }
-        if (L2.contains(L1.get(0))) {
-            System.out.println(L1.get(0));
-        }
-        printCommonValues(L1.subList(1, L1.size()), L2);
-    }
-
-    // 11. בניית רשימה עם הערכים המשותפים של L1 ו-L2 (כולל חזרות)
-    public static List<Integer> commonValues(List<Integer> L1, List<Integer> L2) {
-        if (L1.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<Integer> list = commonValues(L1.subList(1, L1.size()), L2);
-        if (L2.contains(L1.get(0))) {
-            list.add(0, L1.get(0));
-        }
-        return list;
-    }
-
-    // 12. מחיקת כל החוליות ב-L1 עם ערכים המופיעים ב-L2
-    public static List<Integer> deleteAllOccurrences(List<Integer> L1, List<Integer> L2) {
-        if (L1.isEmpty()) {
-            return new ArrayList<>();
-        }
-        List<Integer> list = deleteAllOccurrences(L1.subList(1, L1.size()), L2);
-        if (!L2.contains(L1.get(0))) {
-            list.add(0, L1.get(0));
-        }
-        return list;
-    }
-
-    // Main להרצה ובדיקה
-    public static void main(String[] args) {
-        int[] array = {1, 2, 3, 4, 5};
-        List<Integer> list = arrayToList(array);
-
-        System.out.println("Original list:");
-        printList(list);
-
-        System.out.println("\nReversed list:");
-        printListReverse(list);
-
-        System.out.println("\nEven numbers:");
-        printEvenNumbers(list);
-
-        System.out.println("\nContains number 3: " + containsNumber(list, 3));
-
-        List<Integer> updatedList = deleteFirstOccurrence(list, 3);
-        System.out.println("\nList after deleting 3:");
-        printList(updatedList);
-    }
 }
