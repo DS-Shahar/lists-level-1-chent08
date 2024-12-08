@@ -85,31 +85,40 @@ public class Main {
 	    if(head == null) {
 	    	return false;
 	    }
-	    if(head.getValue() == target) {
+	    if(head.getValue().equals(target)) {
 	    	return true;
 	    }
 	    return numInListTailRecursion(head.getNext() , target);
 	}
 	
-	public static Node<Integer> removeFirst( Node<Integer> head , int target){
+	public static Node<Integer> removeFirst( Node<Integer> head , int target){		
 		if (head == null) {
-	        return null;
-	    }
-		
+	        	return null;
+	    	}
 		if (head.getValue() == target) {
-	        return head.getNext();  // מחזירים את הצומת הבאה אחרי הראש
-	    }
-
+	        	return head.getNext();  // מחזירים את הצומת הבאה אחרי הראש
+	    	}
 		Node<Integer> current = head;
-		while(current != null) {
-			if(current.getNext().getValue() == target) {
+		while (current.hasNext())  {
+			if(current.getNext().getValue().equals(target)) {
 				current.setNext(current.getNext().getNext()); // דילוג על הצומת עם המספר המבוקש
 				return head;
 			}
 			current = current.getNext();
-		}
-		
+		}		
 		return head;
+	}
+	public static Node<Integer> removeFirst2( Node<Integer> p , int target){		
+		Node<Integer> dummy = new Node<Integer>(-1, p);
+		Node<Integer> current = dummy;
+		while (current.hasNext())  {
+			if(current.getNext().getValue().equals(target)) {
+				current.setNext(current.getNext().getNext()); // דילוג על הצומת עם המספר המבוקש
+				return dummy.getNext();
+			}
+			current = current.getNext();
+		}		
+		return dummy.getNext();
 	}
 
 	public static Node<Integer> removeIndexNode(Node<Integer> head , int index){
